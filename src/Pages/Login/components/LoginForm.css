@@ -1,0 +1,9 @@
+.password {
+    position: relative;
+}
+.password-togle-icon {
+    position: absolute;
+    top: 8px;
+    z-index: 1000;
+    right: 15px;
+}
