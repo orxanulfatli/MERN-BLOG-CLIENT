@@ -1,7 +1,7 @@
 import React from 'react'
 
 type TextErrorsProps = {
-    error:string
+    error:string|undefined
 }
 const TextErrors:React.FC<TextErrorsProps> = ({error}) => {
   return (

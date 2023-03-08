@@ -1,4 +1,4 @@
-.login{
+.register_page{
   width: 100%;
   padding: 2.5rem 0;
   background: #fdfdfd;
@@ -6,12 +6,10 @@
   justify-content: center;
 }
 
- .login_box{
+ .register_box{
   background: #fff;
   max-width: 400px;
   width: 100%;
   border: 1px solid #ddd;
   padding: 2.7rem 1.7rem;
 }
-
-

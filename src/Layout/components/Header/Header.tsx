@@ -5,7 +5,7 @@ import Search from "./Search";
 
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light p-3">
       <Link to="/" className="navbar-brand">
         BlogDev
       </Link>

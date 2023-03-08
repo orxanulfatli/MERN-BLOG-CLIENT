@@ -7,10 +7,10 @@ const Menu = () => {
         { lablel: "Refgister", path: "/register" },
       ];
   return (
-    <ul className="navbar-nav   ms-auto">
+    <ul className="navbar-nav ms-auto">
       {authLinks.map((link, index) => (
         <li key={index} className="nav-item">
-          <Link to={link.path} className="nav-link active" aria-current="page">
+          <Link to={link.path} className="nav-link " >
             {link.lablel}
           </Link>
         </li>
@@ -23,11 +23,12 @@ const Menu = () => {
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
+          id='navbarDropdown'
         >
           UserName
         </span>
 
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu" aria-labelledby='navbarDropdown'>
           <li>
             <Link className="dropdown-item" to="/profile">
               Profile
