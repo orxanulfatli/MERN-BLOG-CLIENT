@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginPass from "./components/LoginPass/LoginPass";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginSms from "./components/LoginSms/LoginSms";
+import { useAppSelector } from "../../hooks/redux";
 
 const Login: React.FC = () => {
   const [sms, setSms] = React.useState(false);
-
+  const {isAuth} = useAppSelector(state=>state.authReducer)
+  const navigate = useNavigate()
+  const location = useLocation()
+  let from = location?.state?.from?.pathname || '/'
+  
 
   return (
     <div className="login">

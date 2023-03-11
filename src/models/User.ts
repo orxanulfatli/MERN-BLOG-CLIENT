@@ -23,3 +23,10 @@ export interface IAuth {
     accessToken: string
     user:IUser
 }
+
+export interface IRegister {
+    
+    success: boolean;
+    message: string;
+}
+

@@ -1,11 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import './Header.css'
 import Menu from "./Menu";
 import Search from "./Search";
 
+//  style={{ backgroundColor: "#ECF2FF" }}
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light p-3">
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-light p-3"
+    >
       <Link to="/" className="navbar-brand">
         BlogDev
       </Link>

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IApiError } from "../../models/Error";
+import { createSlice } from "@reduxjs/toolkit";
+// import { IApiError } from "../../models/Error";
 
 type AlertType = {
     // message:string|string[]|null
@@ -18,22 +18,22 @@ const alertSlice = createSlice({
     name: 'alert',
     initialState,
     reducers: {
-        loading: (state) => {
+        startLoading: (state) => {
             state.isLoading = true
             // state.error = null
         },
-        success: (state, /*action: PayloadAction<string | string[]>*/) => {
-            // const {payload} = action
-            // state.message=payload
-            state.isLoading = false
-            // state.error=null
-        },
+        // success: (state, /*action: PayloadAction<string | string[]>*/) => {
+        //     // const {payload} = action
+        //     // state.message=payload
+        //     state.isLoading = false
+        //     // state.error=null
+        // },
         // error: (state, action: PayloadAction<IApiError>) => {
         //     const { payload } = action
         //     state.isLoading = false
         //     state.error=payload
         // }
-        error: (state) => {
+        stopLoading: (state) => {
             state.isLoading = false
         }
     }

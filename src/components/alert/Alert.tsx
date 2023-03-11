@@ -1,9 +1,9 @@
-import React from 'react'
+import './Alert.css'
 import { useAppSelector } from '../../hooks/redux';
 import Loading from './Loading'
 
 //alerti bashqa cur ishlemishem axira kimi ishliyib toast da yaratmaq olar
-const Alert = () => {
+export const Alert = () => {
       const { isLoading } = useAppSelector(
         (state) => state.alertReducer
       );
@@ -14,4 +14,11 @@ const Alert = () => {
   )
 }
 
-export default Alert
+
+export const showErrMsg = (msg: string) => {
+  return <div className="errMsg">{msg}</div>;
+};
+
+export const showSuccessMsg = (msg: string) => {
+  return <div className="successMsg">{msg}</div>;
+};

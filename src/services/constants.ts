@@ -7,3 +7,6 @@
 
 export const LOGIN_URL = '/login'
 export const REGISTER_URL = '/register'
+export const ACTIVATE_URL = '/active'
+export const REFRESH_URL = '/refresh_token'
+export const LOGOUT_URL = '/logout'

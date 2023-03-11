@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { FC } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAppSelector } from "../hooks/redux";
 
-const AppRoutes = () => {
-  return (
-    <div>Routes</div>
-  )
+interface IPublicRoute {
+  restricted?: boolean;
 }
 
-export default AppRoutes;
+const PublicRoute: FC<IPublicRoute> = ({ restricted }) => {
+  const { isAuth } = useAppSelector((state) => state.authReducer);
+  const location = useLocation();
+  return isAuth && restricted ? (
+    <Navigate to="/" replace={true}  />
+  ) : (
+    <Outlet />
+  );
+};
+
+export default PublicRoute;
