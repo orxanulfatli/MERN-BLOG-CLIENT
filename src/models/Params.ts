@@ -1,3 +1,4 @@
 export type IParams ={ 
-    activeToken?:string
+    activeToken?: string
+    id?:string
 }

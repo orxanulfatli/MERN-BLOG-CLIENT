@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 const Menu = () => {
   const { isAuth, user } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch()
+
   const publicLinks = [
     { label: "Login", path: "/login" },
     { label: "Refgister", path: "/register" },
@@ -46,7 +47,7 @@ const Menu = () => {
             style={{minWidth:'8rem'}}
           >
             <li>
-              <Link className="dropdown-item" to="/profile">
+              <Link className="dropdown-item" to={`/profile/${user?._id}`}>
                 Profile
               </Link>
             </li>
@@ -55,7 +56,7 @@ const Menu = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" to="/logout"
+              <Link className="dropdown-item" to="/"
               onClick={handleLogout}>
                 Logout
               </Link>

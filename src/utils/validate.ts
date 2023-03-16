@@ -1,4 +1,4 @@
-import { ILoginCredentials, IRegisterCredentials } from "../models/User";
+import { ILoginCredentials, IRegisterCredentials, IUserProfile } from "../models/User";
 
 const validateEmail = (email: string) => {
     let emailRxp = /\S+@\S+\.\S+/
@@ -48,5 +48,23 @@ export const validateRegister = (values:IRegisterCredentials) => {
     if (values.cfPassword !== values.password) {
         errors.cfPassword = 'Password not mathced'
     }
+    return errors
+}
+
+export const validateImage = (image: File) => {
+    if (image.size > 1024 * 1024)  return false 
+    return true
+}
+
+export const validateUpdateUser = (values: IUserProfile) => {
+    let errors = {} as any
+    if (!values.avatar) {
+       return errors
+    }
+    if (!validateImage(values.avatar )) {
+        errors.avatar = 'The largest image size is 1mb'
+        console.log('error')
+    }
+    
     return errors
 }

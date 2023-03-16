@@ -30,3 +30,6 @@ export interface IRegister {
     message: string;
 }
 
+export interface IUserProfile extends IRegisterCredentials {
+    avatar:null|File
+}
