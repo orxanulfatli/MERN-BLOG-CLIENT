@@ -7,7 +7,7 @@ export const useForm = <T extends object>(
   validate?: (values: T) => T
 ) => {
   const [formData, setFormData] = useState<T>(initialState);
-    const [errors, setErrors] = useState(initialState);
+    const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: InputChange) => {
@@ -21,6 +21,7 @@ export const useForm = <T extends object>(
   };
 
   useEffect(() => {
+    console.log(Object.keys(errors).length)
       if (Object.keys(errors).length === 0 && isSubmitting) {
          onSubmit?.(formData);
       }

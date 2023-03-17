@@ -1,16 +1,16 @@
 import { useState } from "react";
 import PasswordInput from "../../../components/FormControl/PasswordInput/PasswordInput";
 import TextErrors from "../../../components/TextErrors";
-import { useAppSelector } from "../../../hooks/redux";
+import { updateUserAC } from "../../../Global/profile/action";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useForm } from "../../../hooks/useForm";
 import { IUserProfile } from "../../../models/User";
-import { updateUser } from "../../../services/authService";
-import { InputChange } from "../../../utils/types";
 import { validateUpdateUser } from "../../../utils/validate";
 import NotFound from "../../NotFound/NotFound";
 
 const UserInfo = () => {
-  const { isAuth, user } = useAppSelector((state) => state.authReducer);
+  const { user } = useAppSelector((state) => state.authReducer);
+  const dispatch = useAppDispatch()
   const initState: IUserProfile = {
     name: "",
     account: "",
@@ -19,11 +19,10 @@ const UserInfo = () => {
     cfPassword: "",
   };
   const onSubmit = (data: IUserProfile) => {
-    // if (!data.avatar||!data.name) {console.log(data)}
-    updateUser({ name: data?.name })
-      .then((response) => console.log(response.data))
-      .catch((err) => console.log(err.response.data));
-  };
+    if (data.avatar || data.name) {
+      dispatch(updateUserAC({name:data.name,avatar:data.avatar}))
+    }
+  }
   const { formData, errors, handleChange, handleSubmit } = useForm(
     initState,
     onSubmit,
@@ -56,6 +55,7 @@ const UserInfo = () => {
           />
         </span>
       </div>
+      {errors.avatar && <TextErrors error={errors.avatar} />}
 
       <div className="form-group my-3">
         <label htmlFor="name">Name</label>
@@ -103,7 +103,6 @@ const UserInfo = () => {
           handleChange={handleChange}
         />
       </div>
-      {/* {errors.avatar && <TextErrors error={errors.avatar} />} */}
       <button className="btn btn-dark w-100" type="submit">
         Update
       </button>

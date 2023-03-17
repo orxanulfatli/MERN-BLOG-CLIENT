@@ -17,15 +17,14 @@ export interface IUser extends ILoginCredentials {
     updatedAt: string
 }
 
-export interface IAuth {
+export interface IAuthResponse {
     success: boolean
     message:string|null
     accessToken: string
     user:IUser
 }
 
-export interface IRegister {
-    
+export interface IRegisterResponse { 
     success: boolean;
     message: string;
 }

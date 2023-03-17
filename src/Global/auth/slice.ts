@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { IApiError } from "../../models/Error";
-import { IAuth, IUser } from "../../models/User";
+import { IAuthResponse, IUser } from "../../models/User";
 import { verifyOTP } from "../../services/authService";
 import {
   checkAuthAC,
@@ -121,7 +121,7 @@ function recieveErrors(state: IAuthState, action: any) {
   }
 }
 
-function loginSuccess(state: IAuthState, action: PayloadAction<IAuth>) {
+function loginSuccess(state: IAuthState, action: PayloadAction<IAuthResponse>) {
   const { payload } = action;
   state.error = null;
   state.user = payload.user;

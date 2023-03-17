@@ -2,9 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { IApiError } from "../../models/Error";
 import {
-  IAuth,
+  IAuthResponse,
   ILoginCredentials,
   IRegisterCredentials,
+  IRegisterResponse,
 } from "../../models/User";
 import {
   checkAuth,
@@ -17,7 +18,7 @@ import {
 import { alertAC } from "../alert/alertSlice";
 
 export const loginAC = createAsyncThunk<
-  IAuth,
+  IAuthResponse,
   ILoginCredentials,
   { rejectValue: IApiError }
 >("login", async (payload, { rejectWithValue, dispatch }) => {
@@ -26,7 +27,7 @@ export const loginAC = createAsyncThunk<
     const { data } = await login(payload);
     localStorage.setItem("loggin", "true");
     dispatch(alertAC.stopLoading());
-    return data as IAuth;
+    return data as IAuthResponse;
   } catch (error: any) {
     let err: AxiosError<IApiError> = error;
 
@@ -43,10 +44,7 @@ export const loginAC = createAsyncThunk<
 });
 
 export const registerAC = createAsyncThunk<
-  {
-    success: boolean;
-    message: string;
-  },
+  IRegisterResponse,
   IRegisterCredentials,
   { rejectValue: IApiError }
 >("register", async (payload, { rejectWithValue, dispatch }) => {
@@ -70,21 +68,22 @@ export const registerAC = createAsyncThunk<
   }
 });
 
-export const checkAuthAC = createAsyncThunk(
-  "checkAuth",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await checkAuth();
-      localStorage.setItem("loggin", "true");
-      return data as IAuth;
-    } catch (error: any) {
-      let err: AxiosError<IApiError> = error;
+export const checkAuthAC = createAsyncThunk<
+  IAuthResponse,
+  undefined,
+  { rejectValue: IApiError }
+>("checkAuth", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await checkAuth();
+    localStorage.setItem("loggin", "true");
+    return data;
+  } catch (error: any) {
+    let err: AxiosError<IApiError> = error;
 
-      if (!err.response) throw error;
-      return rejectWithValue(err.response.data);
-    }
+    if (!err.response) throw error;
+    return rejectWithValue(err.response.data);
   }
-);
+});
 
 export const logoutAC = createAsyncThunk(
   "logout",
@@ -123,7 +122,7 @@ export const sendOtpAC = createAsyncThunk<
 });
 
 export const verifyOtpAC = createAsyncThunk<
-  IAuth,
+  IAuthResponse,
   { phone: string; code: string },
   { rejectValue: IApiError }
 >("verify-otp", async (payload, { rejectWithValue, dispatch }) => {
@@ -132,7 +131,7 @@ export const verifyOtpAC = createAsyncThunk<
     const { data } = await verifyOTP(payload);
     localStorage.setItem("loggin", "true");
     dispatch(alertAC.stopLoading());
-    return data as IAuth;
+    return data as IAuthResponse;
   } catch (error: any) {
     let err: AxiosError<IApiError> = error;
 

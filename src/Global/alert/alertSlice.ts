@@ -1,16 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-// import { IApiError } from "../../models/Error";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IApiError } from "../../models/Error";
 
 type AlertType = {
-    // message:string|string[]|null
+    message:string|string[]|null
     isLoading: boolean
-    // error: IApiError |null
+    error: null|string|string[]
 }
 
 const initialState: AlertType = {
-    // message:null,
+    message:null,
     isLoading: false,
-    // error: null
+    error: null
 }
 
 
@@ -20,21 +20,25 @@ const alertSlice = createSlice({
     reducers: {
         startLoading: (state) => {
             state.isLoading = true
-            // state.error = null
+            state.error = null
+            state.message = null
         },
-        // success: (state, /*action: PayloadAction<string | string[]>*/) => {
-        //     // const {payload} = action
-        //     // state.message=payload
-        //     state.isLoading = false
-        //     // state.error=null
-        // },
-        // error: (state, action: PayloadAction<IApiError>) => {
-        //     const { payload } = action
-        //     state.isLoading = false
-        //     state.error=payload
-        // }
+        success: (state, action: PayloadAction<string | string[] | null>) => {
+            const {payload} = action
+            state.message=payload
+            state.isLoading = false
+            state.error=null
+        },
+        error: (state, action: PayloadAction<any>) => {
+            const { payload } = action
+            state.isLoading = false
+            state.error = payload.message
+           
+        },
         stopLoading: (state) => {
             state.isLoading = false
+            state.error = null
+            state.message = null
         }
     }
 })

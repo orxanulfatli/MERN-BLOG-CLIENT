@@ -61,7 +61,7 @@ export const validateUpdateUser = (values: IUserProfile) => {
     if (!values.avatar) {
        return errors
     }
-    if (!validateImage(values.avatar )) {
+    if (!validateImage(values.avatar  )) {
         errors.avatar = 'The largest image size is 1mb'
         console.log('error')
     }

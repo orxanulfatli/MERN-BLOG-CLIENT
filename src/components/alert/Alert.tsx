@@ -1,17 +1,24 @@
 import './Alert.css'
 import { useAppSelector } from '../../hooks/redux';
 import Loading from './Loading'
+import Toast from './Toast';
 
-//alerti bashqa cur ishlemishem axira kimi ishliyib toast da yaratmaq olar
 export const Alert = () => {
-      const { isLoading } = useAppSelector(
+      const { isLoading,error,message } = useAppSelector(
         (state) => state.alertReducer
       );
   return (
-      <div>
-          {isLoading && <Loading />}
-     </div>
-  )
+    <div>
+      {isLoading && <Loading />}
+      {error && (
+        <Toast title="Errors" body={error} bgColor="bg-danger" />
+      )}
+
+      {message && (
+        <Toast title="Success" body={message} bgColor="bg-success" />
+      )}
+    </div>
+  );
 }
 
 

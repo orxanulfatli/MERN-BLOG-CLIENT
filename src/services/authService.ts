@@ -1,7 +1,8 @@
+import axios, { AxiosPromise, AxiosResponse } from "axios";
 import {
-  IAuth,
+  IAuthResponse,
   ILoginCredentials,
-  IRegister,
+  IRegisterResponse,
   IRegisterCredentials,
 } from "../models/User";
 import { $mainAPi, $api } from "./config";
@@ -17,19 +18,19 @@ import {
 } from "./constants";
 
 export const login = async (data: ILoginCredentials) => {
-  return $mainAPi.post<IAuth>(LOGIN_URL, data);
+  return $mainAPi.post<IAuthResponse>(LOGIN_URL, data);
 };
-
 export const register = async (data: IRegisterCredentials) => {
-  return $mainAPi.post<IRegister>(REGISTER_URL, data);
+  return $mainAPi.post<IRegisterResponse>(REGISTER_URL, data);
 };
 export const activateAccount = async (data: { activeToken: string }) => {
   return $mainAPi.post<{ message: string }>(ACTIVATE_URL, data);
 };
 
 export const checkAuth = async () => {
-  return $mainAPi.get<{ message: string; accessToken: string }>(REFRESH_URL);
+  return $mainAPi.get<IAuthResponse>(REFRESH_URL);
 };
+
 export const logout = async () => {
   return $mainAPi.get(LOGOUT_URL);
 };
@@ -38,9 +39,18 @@ export const sendOTP = async (data: { phone: string }) => {
   return $mainAPi.post(SEND_OTP_URL, data);
 };
 export const verifyOTP = async (data: { phone: string; code: string }) => {
-  return $mainAPi.post<IAuth>(VERIFY_OTP_URL, data);
+  return $mainAPi.post<IAuthResponse>(VERIFY_OTP_URL, data);
 };
 
-export const updateUser = async (data:{name:string}) => {
-      return $api.post(UPDATE_USER,data);
+export const updateUser = async (data:{name:string,avatar:null|string}) => {
+      return $api.patch<{message:string}>(UPDATE_USER,data);
 };
+export const imageUpload = async (file: File) => {
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("upload_preset", "gttjcapw")
+  formData.append("cloud_name", "dtnqoymrd")
+
+  const { data } = await axios.post('https://api.cloudinary.com/v1_1/dtnqoymrd/upload',formData)
+  return { public_id: data.public_id, url: data.secure_url };
+}
