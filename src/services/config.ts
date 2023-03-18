@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import { checkAuthAC } from "../Global/auth/action";
 import {AppStore} from '../Global/store'
 export const $mainAPi = axios.create({

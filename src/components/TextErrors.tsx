@@ -5,7 +5,7 @@ type TextErrorsProps = {
 }
 const TextErrors:React.FC<TextErrorsProps> = ({error}) => {
   return (
-      <div style={{color:'red'}}>{error }</div>
+      <div style={{color:'red',padding:'10px'}}>{error }</div>
   )
 }
 

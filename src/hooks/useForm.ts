@@ -20,8 +20,8 @@ export const useForm = <T extends object>(
     }
   };
 
+  useEffect(() => { console.log(formData) }, [formData])
   useEffect(() => {
-    console.log(Object.keys(errors).length)
       if (Object.keys(errors).length === 0 && isSubmitting) {
          onSubmit?.(formData);
       }

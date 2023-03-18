@@ -15,6 +15,7 @@ import {
   VERIFY_OTP_URL,
   SEND_OTP_URL,
   UPDATE_USER,
+  RESET_PASSWORD
 } from "./constants";
 
 export const login = async (data: ILoginCredentials) => {
@@ -53,4 +54,9 @@ export const imageUpload = async (file: File) => {
 
   const { data } = await axios.post('https://api.cloudinary.com/v1_1/dtnqoymrd/upload',formData)
   return { public_id: data.public_id, url: data.secure_url };
+}
+
+export const resetPassword = async (data: { password: string }) => {
+  return $api.patch<{message:string}>(RESET_PASSWORD,data)
+  
 }

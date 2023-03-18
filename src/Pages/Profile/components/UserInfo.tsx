@@ -1,7 +1,6 @@
-import { useState } from "react";
 import PasswordInput from "../../../components/FormControl/PasswordInput/PasswordInput";
 import TextErrors from "../../../components/TextErrors";
-import { updateUserAC } from "../../../Global/profile/action";
+import { updateUserAC,resetPasswordAC } from "../../../Global/profile/action";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { useForm } from "../../../hooks/useForm";
 import { IUserProfile } from "../../../models/User";
@@ -22,13 +21,18 @@ const UserInfo = () => {
     if (data.avatar || data.name) {
       dispatch(updateUserAC({name:data.name,avatar:data.avatar}))
     }
+
+    if (data.password) {
+      dispatch(resetPasswordAC({password:data.password}));
+    }
+    console.log('submitted')
   }
   const { formData, errors, handleChange, handleSubmit } = useForm(
     initState,
     onSubmit,
     validateUpdateUser
   );
-
+ console.log(errors)
   if (!user) return <NotFound />;
 
   return (
@@ -81,7 +85,11 @@ const UserInfo = () => {
           disabled={true}
         />
       </div>
-
+      {user.type !== "register" && (
+        <small className="text-danger">
+          * Quick login account with {user.type} can't use this function *
+        </small>
+      )}
       <div className="form-group my-3">
         <label htmlFor="password">Password</label>
 
@@ -90,7 +98,10 @@ const UserInfo = () => {
           name="password"
           value={formData.password}
           handleChange={handleChange}
+          disabled={user.type != "register"}
         />
+
+        {errors.password && <TextErrors error={errors.password} />}
       </div>
 
       <div className="form-group my-3">
@@ -101,7 +112,9 @@ const UserInfo = () => {
           name="cfPassword"
           value={formData.cfPassword}
           handleChange={handleChange}
+          disabled={user.type != "register"}
         />
+        {errors.cfPassword && <TextErrors error={errors.cfPassword} />}
       </div>
       <button className="btn btn-dark w-100" type="submit">
         Update

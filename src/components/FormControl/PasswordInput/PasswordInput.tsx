@@ -12,6 +12,7 @@ const PasswordInput: React.FC<InputProps> = ({
   name,
   value,
   placeholder,
+  disabled,
     handleChange,
   
 }) => {
@@ -27,6 +28,7 @@ const PasswordInput: React.FC<InputProps> = ({
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
+        disabled={disabled}
       />
 
       <span className="password-togle-icon">

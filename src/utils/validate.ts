@@ -52,19 +52,28 @@ export const validateRegister = (values:IRegisterCredentials) => {
 }
 
 export const validateImage = (image: File) => {
-    if (image.size > 1024 * 1024)  return false 
+    if (image?.size > 1024 * 1024)  return false 
     return true
 }
 
 export const validateUpdateUser = (values: IUserProfile) => {
     let errors = {} as any
-    if (!values.avatar) {
-       return errors
-    }
-    if (!validateImage(values.avatar  )) {
+  
+    if (!validateImage(values.avatar as File )) {
         errors.avatar = 'The largest image size is 1mb'
         console.log('error')
     }
+
+    if (values.password) {
+        if (values.password.length < 6) {
+            errors.password = ' Password must be at least 6 characters'
+            console.log('6')
+        }
+        if (values.cfPassword !== values.password) {
+            errors.cfPassword = 'Password not mathced'
+            console.log('match')
+        }
+  }
     
     return errors
 }
