@@ -23,14 +23,16 @@ export const useForm = <T extends object>(
   useEffect(() => { console.log(formData) }, [formData])
   useEffect(() => {
       if (Object.keys(errors).length === 0 && isSubmitting) {
-         onSubmit?.(formData);
+        onSubmit?.(formData);
+        setFormData(initialState)
+        setIsSubmitting(false)
       }
-  }, [errors]);
+  }, [errors,isSubmitting]);
   const handleSubmit = (e: FormSubmit) => {
     if (e) e.preventDefault();
     validate && setErrors(validate(formData));
     setIsSubmitting(true);
   };
 
-  return { formData, handleChange, handleSubmit, errors };
+  return { formData, handleChange, handleSubmit, errors, setFormData };
 };

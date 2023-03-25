@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logoutAC } from "../../../Global/auth/action";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 
 const Menu = () => {
   const { isAuth, user } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch()
+  const {pathname} = useLocation()
 
   const publicLinks = [
     { label: "Login", path: "/login" },
@@ -15,19 +16,28 @@ const Menu = () => {
     { label: "CreateBlog", path: "/create_blog" },
   ];
   const navLinks = isAuth ? protectedLinks : publicLinks;
+    const isActive = (pn: string) => {
+      if (pn === pathname) return "active";
+    };
   const handleLogout = () => {
      dispatch(logoutAC())
   }
   return (
     <ul className="navbar-nav ms-auto">
       {navLinks.map((link, index) => (
-        <li key={index} className="nav-item">
+        <li key={index} className={`nav-item ${isActive(link.path)}`}>
           <Link to={link.path} className="nav-link ">
             {link.label}
           </Link>
         </li>
       ))}
-
+      {user?.role === "admin" && (
+        <li className={`nav-item ${isActive("/category")}`}>
+          <Link to="/category" className="nav-link">
+            Category
+          </Link>
+        </li>
+      )}
       {/* {dropdown} */}
       {user && (
         <li className="nav-item dropdown ">
@@ -44,7 +54,7 @@ const Menu = () => {
           <ul
             className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
             aria-labelledby="navbarDropdown"
-            style={{minWidth:'8rem'}}
+            style={{ minWidth: "8rem" }}
           >
             <li>
               <Link className="dropdown-item" to={`/profile/${user?._id}`}>
@@ -56,8 +66,7 @@ const Menu = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" to="/"
-              onClick={handleLogout}>
+              <Link className="dropdown-item" to="/" onClick={handleLogout}>
                 Logout
               </Link>
             </li>

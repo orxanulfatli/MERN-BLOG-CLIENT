@@ -25,6 +25,9 @@ export const loginAC = createAsyncThunk<
   try {
     dispatch(alertAC.startLoading());
     const { data } = await login(payload);
+    
+   
+    
     localStorage.setItem("loggin", "true");
     dispatch(alertAC.stopLoading());
     return data as IAuthResponse;

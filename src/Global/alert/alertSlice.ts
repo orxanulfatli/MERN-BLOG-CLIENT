@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IApiError } from "../../models/Error";
 
 type AlertType = {
-    message:string|string[]|null
+    message:string|null
     isLoading: boolean
     error: null|string|string[]
 }
@@ -23,7 +23,7 @@ const alertSlice = createSlice({
             state.error = null
             state.message = null
         },
-        success: (state, action: PayloadAction<string | string[] | null>) => {
+        success: (state, action: PayloadAction<string | null>) => {
             const {payload} = action
             state.message=payload
             state.isLoading = false
