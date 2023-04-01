@@ -1,3 +1,4 @@
+import {  IBlog } from "../models/Blog";
 import { ILoginCredentials, IRegisterCredentials, IUserProfile } from "../models/User";
 
 const validateEmail = (email: string) => {
@@ -76,4 +77,36 @@ export const validateUpdateUser = (values: IUserProfile) => {
   }
     
     return errors
+}
+
+export const validateBlog = (blog:IBlog) => {
+    let errors = {} as any
+    if (!validateImage(blog.thumbnail as File)) {
+        errors.thumbnail = 'The largest image size is 1mb'
+        console.log('error')
+    } else if (!blog.thumbnail) {
+        errors.thumbnail = 'Thumbnail cannot be left blank'
+    }
+    if (blog.title.trim().length < 10) {
+        errors.title = 'Title has at least 10 characters.'
+    } else if (blog.title.trim().length > 50) {
+         errors.title = 'Title is up to 50 characters'
+    }
+
+    if (blog.content.trim().length < 2000) {
+        errors.content = 'Content has at least 2000 characters.'
+    } 
+
+    if (blog.description.trim().length < 50) {
+        errors.description = 'Description has at least 50 characters.'
+    } else if (blog.description.trim().length > 200) {
+        errors.description = 'Description is up to 200 characters'
+    }
+
+    if (!blog.category) {
+        errors.category = 'Category cannot be left blank'
+    }
+
+    return errors
+
 }

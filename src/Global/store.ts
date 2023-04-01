@@ -2,11 +2,13 @@ import { combineReducers, configureStore, } from '@reduxjs/toolkit'
 import { authReducer } from './auth/slice';
 import { alertReducer } from './alert/alertSlice'
 import { categoryReducer } from './category/slice'
+import {blogReducer} from './blog/slice'
 
 const rootReducer = combineReducers({
     authReducer,
     alertReducer,
-    categoryReducer
+    categoryReducer,
+    blogReducer
 })
 
 export const setupStore = () => {

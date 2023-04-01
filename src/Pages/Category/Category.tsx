@@ -43,9 +43,7 @@ const Category = () => {
     }
   }, [edit]);
 
-  useEffect(() => {
-    dispatch(getCategoriesAC());
-  }, []);
+
   return (
     <div className="category">
       <form onSubmit={handleSubmit}>

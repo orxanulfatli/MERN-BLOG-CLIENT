@@ -14,4 +14,6 @@ export const SEND_OTP_URL = '/login_sms'
 export const VERIFY_OTP_URL = '/sms_verify'
 export const UPDATE_USER = '/update_user'
 export const RESET_PASSWORD = '/reset_password'
-export const CATEGORY_URL = '/category'
+export const CATEGORY_URL = '/category';
+export const CREATE_BLOG_URL = '/blog'
+export const HOME_BLOGS_URL = '/home/blogs'
