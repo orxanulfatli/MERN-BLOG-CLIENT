@@ -36,7 +36,7 @@ export const createBlogAC = createAsyncThunk<IBlog, IBlog, { rejectValue: IApiEr
 })
 
 export const getHomeBlogsAC = createAsyncThunk<IHomeBlogs[], undefined, { rejectValue: IApiError }
->('create_blog', async (_, { dispatch, rejectWithValue }) => {
+>('home_blog', async (_, { dispatch, rejectWithValue }) => {
     try {
         dispatch(alertAC.startLoading());
     

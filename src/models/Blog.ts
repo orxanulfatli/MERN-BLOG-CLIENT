@@ -2,7 +2,7 @@ import { IUser } from "./User"
 
 export interface IBlog {
     _id?: string
-    user?: string | IUser
+    user: string | IUser
     title: string
     content: string
     description: string

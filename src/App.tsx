@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import {Alert} from "./components/alert/Alert";
+import { Alert } from "./components/alert/Alert";
 import PersistLogin from "./components/PersistLogin";
 import { getHomeBlogsAC } from "./Global/blog/action";
 import { getCategoriesAC } from "./Global/category/action";
-import { useAppDispatch } from "./hooks/redux";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import MainLayout from "./Layout/MainLayout";
 import Active from "./Pages/Active/Active";
 import Category from "./Pages/Category/Category";
 import CreateBlog from "./Pages/CreateBlog/CreateBlog";
-import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import NotFound from "./Pages/NotFound/NotFound";
 import Profile from "./Pages/Profile/Profile";
@@ -17,14 +17,14 @@ import Register from "./Pages/Register/Register";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 
-
-
 function App() {
-  const dispatch = useAppDispatch()
-    useEffect(() => {
-      dispatch(getCategoriesAC());
-      dispatch(getHomeBlogsAC())
-    }, []);
+  const dispatch = useAppDispatch();
+  const {newBlog} = useAppSelector(state=>state.blogReducer)
+  useEffect(() => {
+    dispatch(getCategoriesAC());
+
+  }, []);
+ 
 
   return (
     <div className="container">
@@ -45,8 +45,8 @@ function App() {
             <Route element={<ProtectedRoute permission={["admin"]} />}>
               <Route path="category" element={<Category />} />
             </Route>
-            <Route element={<ProtectedRoute permission={['admin', 'user']} />}>
-              <Route path="create_blog" element={<CreateBlog/> } />
+            <Route element={<ProtectedRoute permission={["admin", "user"]} />}>
+              <Route path="create_blog" element={<CreateBlog />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
