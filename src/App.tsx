@@ -7,6 +7,7 @@ import { getCategoriesAC } from "./Global/category/action";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import MainLayout from "./Layout/MainLayout";
 import Active from "./Pages/Active/Active";
+import BlogsByCategory from "./Pages/BlogsByCategory/BlogsByCategory";
 import Category from "./Pages/Category/Category";
 import CreateBlog from "./Pages/CreateBlog/CreateBlog";
 import Home from "./Pages/Home/Home";
@@ -48,7 +49,7 @@ function App() {
             <Route element={<ProtectedRoute permission={["admin", "user"]} />}>
               <Route path="create_blog" element={<CreateBlog />} />
             </Route>
-
+            <Route path="blogs/:id" element={<BlogsByCategory/> } />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Route>

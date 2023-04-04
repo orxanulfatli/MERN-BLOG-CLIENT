@@ -17,3 +17,10 @@ export interface IHomeBlogs {
     count: number
     blogs: IBlog[]
 }
+
+export interface IBlogsCategory {
+    id: string
+    blogs: IBlog[]
+    total: number
+    search: string
+}

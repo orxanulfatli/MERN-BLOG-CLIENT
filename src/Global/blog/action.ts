@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { IBlog, IHomeBlogs } from "../../models/Blog";
+import { IBlog, IBlogsCategory, IHomeBlogs } from "../../models/Blog";
 import { IApiError } from "../../models/Error";
 import { imageUpload } from "../../services/authService";
-import { createBlog, getHomeBlogs } from "../../services/blogService";
+import { createBlog, getBlogsByCategory, getHomeBlogs } from "../../services/blogService";
 import { alertAC } from "../alert/alertSlice";
 
 export const createBlogAC = createAsyncThunk<IBlog, IBlog, { rejectValue: IApiError }
@@ -44,6 +44,29 @@ export const getHomeBlogsAC = createAsyncThunk<IHomeBlogs[], undefined, { reject
         dispatch(alertAC.stopLoading());
         console.log(data)
         return data
+    } catch (error: any) {
+        let err: AxiosError<IApiError> = error;
+        if (err.response) {
+            dispatch(alertAC.error(err.response.data));
+        } else {
+            dispatch(alertAC.error(error));
+        }
+        if (!err.response) throw error;
+        return rejectWithValue(err.response.data);
+    }
+})
+
+export const getBlogsByCategoryAC = createAsyncThunk<IBlogsCategory, {categoryId:string,search?:string}, { rejectValue: IApiError }
+>('category_blog', async (payload, { dispatch, rejectWithValue }) => {
+    try {
+        dispatch(alertAC.startLoading());
+        let limit = 8;
+        let value = payload.search ? payload.search : `?page=${1}`;
+
+        const { data } = await getBlogsByCategory(payload.categoryId,value,limit);
+
+        dispatch(alertAC.stopLoading());
+        return {...data,id:payload.categoryId,search:payload.search}
     } catch (error: any) {
         let err: AxiosError<IApiError> = error;
         if (err.response) {
