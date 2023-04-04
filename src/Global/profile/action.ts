@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { IApiError } from "../../models/Error";
-import { imageUpload, updateUser,resetPassword } from "../../services/authService";
+import { IUser } from "../../models/User";
+import { imageUpload, updateUser,resetPassword, getOtherInfo } from "../../services/authService";
 import { alertAC } from "../alert/alertSlice";
 
 export const updateUserAC = createAsyncThunk<
@@ -57,4 +58,21 @@ export const resetPasswordAC = createAsyncThunk<
     if (!err.response) throw error;
     return rejectWithValue(err.response.data);
   }
-});
+  });
+
+export const getOtherInfoAC = createAsyncThunk<IUser, string, { rejectValue: IApiError }
+>('other_info', async (id,{dispatch,rejectWithValue}) => {
+    try {
+      const { data } = await getOtherInfo(id);
+      return data
+    } catch (error:any) {
+      let err: AxiosError<IApiError> = error;
+      if (err.response) {
+        dispatch(alertAC.error(err.response.data));
+      } else {
+        dispatch(alertAC.error(error));
+      }
+      if (!err.response) throw error;
+      return rejectWithValue(err.response.data);
+    }
+  })

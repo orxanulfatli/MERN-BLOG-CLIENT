@@ -15,6 +15,7 @@ export interface IUser extends ILoginCredentials {
     role: string
     type: string
     updatedAt: string
+    createdAt:string
 }
 
 export interface IAuthResponse {

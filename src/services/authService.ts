@@ -4,6 +4,7 @@ import {
   ILoginCredentials,
   IRegisterResponse,
   IRegisterCredentials,
+  IUser
 } from "../models/User";
 import { $mainAPi, $api } from "./config";
 import {
@@ -58,5 +59,10 @@ export const imageUpload = async (file: File) => {
 
 export const resetPassword = async (data: { password: string }) => {
   return $api.patch<{message:string}>(RESET_PASSWORD,data)
+  
+}
+
+export const getOtherInfo = async (id: string) => {
+  return $mainAPi.get<IUser>(`/user/${id}`)
   
 }

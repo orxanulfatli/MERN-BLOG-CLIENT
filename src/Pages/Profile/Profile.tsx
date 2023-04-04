@@ -13,7 +13,7 @@ const Profile = () => {
     return (
       <div className="row my-3">
         <div className="col-md-5 mb-3">
-          {user?._id === id ? <UserInfo /> : <OtherInfo />}
+          {user?._id === id ? <UserInfo /> : <OtherInfo id={id} />}
         </div>
 
         <div className="col-md-7">
