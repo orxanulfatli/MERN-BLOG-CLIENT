@@ -24,3 +24,9 @@ export interface IBlogsCategory {
     total: number
     search: string
 }
+export interface IBlogsUser {
+    id: string
+    blogs: IBlog[]
+    total: number
+    search: string
+}

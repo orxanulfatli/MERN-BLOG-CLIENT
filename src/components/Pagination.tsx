@@ -10,7 +10,7 @@ const Pagination: React.FC<IProps> = ({ total, callback }) => {
     const searchParams = useSearchParams()
     const [page, setPage] = useState(1);
 
-    const newArr = [...Array(total)].map((_, i) => i + 1);
+  const newArr = [...Array(total)].map((_, i) => i + 1);
     const navigate = useNavigate();
 
   const isActive = (index: number) => {

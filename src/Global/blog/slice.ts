@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBlog, IBlogsCategory, IHomeBlogs } from "../../models/Blog";
-import { createBlogAC, getBlogsByCategoryAC, getHomeBlogsAC } from "./action";
+import { IBlog, IBlogsCategory, IBlogsUser, IHomeBlogs } from "../../models/Blog";
+import { createBlogAC, getBlogsByCategoryAC, getBlogsByUserAC, getHomeBlogsAC } from "./action";
 
 interface IBlogState {
     homeBlogs: IHomeBlogs[]
     newBlog: IBlog | null
-    categoryBlogs:IBlogsCategory[]
+    categoryBlogs: IBlogsCategory[]
+    isLoading: boolean
+    userBlogs:IBlogsUser[]
 }
 const initialState: IBlogState = {
     homeBlogs: [],
     newBlog: null,
-    categoryBlogs:[]
+    categoryBlogs: [],
+    isLoading: false,
+    userBlogs:[]
 }
 
 const blogSlice = createSlice({
@@ -38,6 +42,20 @@ const blogSlice = createSlice({
 
             } else {
                 state.categoryBlogs = state.categoryBlogs.map(blog => (blog.id === payload.id
+                    ? payload
+                    : blog))
+            }
+        })
+        
+
+        //blogs by user
+        builder.addCase(getBlogsByUserAC.fulfilled, (state, action) => {
+            const { payload } = action;
+            if (state.userBlogs.every(item => item.id !== payload.id)) {
+                state.userBlogs.push(payload)
+
+            } else {
+                state.userBlogs = state.userBlogs.map(blog => (blog.id === payload.id
                     ? payload
                     : blog))
             }
