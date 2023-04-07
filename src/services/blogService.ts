@@ -18,3 +18,7 @@ export const getBlogsByCategory = async (id:string,value:string,limit:number) =>
 export const getBlogsByUser = async (id: string,value:string,limit:number) => {
     return $mainAPi.get(`blogs/user/${id}${value}&limit=${limit}`)
 }
+
+export const getBlogDetail = async (id: string) => {
+   return $mainAPi.get<IBlog>(`blog/${id}`)
+}

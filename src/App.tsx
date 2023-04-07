@@ -17,6 +17,7 @@ import Profile from "./Pages/Profile/Profile";
 import Register from "./Pages/Register/Register";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import Blog from "./Pages/Blog/Blog";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -49,7 +50,8 @@ function App() {
             <Route element={<ProtectedRoute permission={["admin", "user"]} />}>
               <Route path="create_blog" element={<CreateBlog />} />
             </Route>
-            <Route path="blogs/:id" element={<BlogsByCategory/> } />
+            <Route path="blogs/:id" element={<BlogsByCategory />} />
+            <Route path = "blog/:id" element = {<Blog/> } />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
