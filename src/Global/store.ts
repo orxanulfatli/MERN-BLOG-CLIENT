@@ -1,16 +1,18 @@
-import { combineReducers, configureStore, } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, } from '@reduxjs/toolkit';
 import { authReducer } from './auth/slice';
-import { alertReducer } from './alert/alertSlice'
-import { categoryReducer } from './category/slice'
-import { blogReducer } from './blog/slice'
-import{profileReducer} from './profile/slice'
+import { alertReducer } from './alert/alertSlice';
+import { categoryReducer } from './category/slice';
+import { blogReducer } from './blog/slice';
+import { profileReducer } from './profile/slice';
+import { commentReducer } from './comment/slice';
 
 const rootReducer = combineReducers({
     authReducer,
     alertReducer,
     categoryReducer,
     blogReducer,
-    profileReducer
+    profileReducer,
+    commentReducer
 })
 
 export const setupStore = () => {

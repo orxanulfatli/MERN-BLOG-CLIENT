@@ -16,4 +16,5 @@ export const UPDATE_USER = '/update_user'
 export const RESET_PASSWORD = '/reset_password'
 export const CATEGORY_URL = '/category';
 export const CREATE_BLOG_URL = '/blog'
-export const HOME_BLOGS_URL = '/home/blogs'
+export const HOME_BLOGS_URL = '/home/blogs';
+export const CREATE_COMMENT_URL = '/comment'

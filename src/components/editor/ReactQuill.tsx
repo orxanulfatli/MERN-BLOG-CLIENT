@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useAppDispatch } from "../../../hooks/redux";
-import { alertAC } from '../../../Global/alert/alertSlice';
-import {validateImage} from '../../../utils/validate'
-import {  imageUpload } from "../../../services/authService";
+import { useAppDispatch } from "../../hooks/redux";
+import { alertAC } from "../../Global/alert/alertSlice";
+import { validateImage } from "../../utils/validate";
+import { imageUpload } from "../../services/authService";
 
 interface IProps {
-    setBody: (value: string) => void;
-    
+  setBody: (value: string) => void;
 }
 
-const Quill: React.FC<IProps> = ({setBody}) => {
+const Quill: React.FC<IProps> = ({ setBody }) => {
   const dispatch = useAppDispatch();
   const quillRef = useRef<ReactQuill>(null);
 
@@ -27,11 +26,12 @@ const Quill: React.FC<IProps> = ({setBody}) => {
     input.onchange = async () => {
       const files = input.files;
       if (!files)
-        return dispatch(alertAC.error({message:'File does not exist'}));
+        return dispatch(alertAC.error({ message: "File does not exist" }));
 
       const file = files[0];
       const check = validateImage(file);
-      if (!check) return dispatch(alertAC.error({message:'max image size is 1mb'}));
+      if (!check)
+        return dispatch(alertAC.error({ message: "max image size is 1mb" }));
 
       dispatch(alertAC.startLoading());
       const photo = await imageUpload(file);
@@ -42,7 +42,7 @@ const Quill: React.FC<IProps> = ({setBody}) => {
         quill?.getEditor().insertEmbed(range, "image", `${photo.url}`);
       }
 
-      dispatch(alertAC.stopLoading())
+      dispatch(alertAC.stopLoading());
     };
   }, [dispatch]);
 
@@ -59,7 +59,7 @@ const Quill: React.FC<IProps> = ({setBody}) => {
       <ReactQuill
         theme="snow"
         modules={modules}
-        placeholder="Write somethings..."     
+        placeholder="Write somethings..."
         onChange={(e) => setBody(e)}
         ref={quillRef}
       />
@@ -85,4 +85,4 @@ let container = [
   ["clean", "link", "image", "video"],
 ];
 
-export default Quill
+export default Quill;

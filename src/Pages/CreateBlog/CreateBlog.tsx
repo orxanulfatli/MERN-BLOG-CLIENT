@@ -4,14 +4,14 @@ import { useForm } from "../../hooks/useForm";
 import { IBlog } from "../../models/Blog";
 import BlogForm from "./components/BlogForm";
 import CardHoriz from "../../components/cards/CardHoriz";
-import ReactQuill from "./components/ReactQuill";
+import ReactQuill from "../../components/editor/ReactQuill";
 import { validateBlog } from "../../utils/validate";
 import TextErrors from "../../components/TextErrors";
 import { useAppDispatch } from "../../hooks/redux";
 import { createBlogAC } from "../../Global/blog/action";
 
 const CreateBlog = () => {
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const initialState = {
     user: "",
     title: "",
@@ -24,9 +24,9 @@ const CreateBlog = () => {
 
   const [body, setBody] = useState("");
 
-    const onSubmit = (blog: IBlog) => {
-        dispatch(createBlogAC(blog));
-        setBody('')
+  const onSubmit = (blog: IBlog) => {
+    dispatch(createBlogAC(blog));
+    setBody("");
   };
 
   const { formData, handleChange, handleSubmit, errors, setFormData } = useForm(
@@ -40,7 +40,7 @@ const CreateBlog = () => {
       setFormData({ ...formData, content: body });
     }
   }, [body]);
-    
+
   return (
     <div className="my-4 create_blog">
       <div className="row mt-4">

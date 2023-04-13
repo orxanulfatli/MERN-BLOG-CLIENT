@@ -9,8 +9,10 @@ interface IPublicRoute {
 const PublicRoute: FC<IPublicRoute> = ({ restricted }) => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const location = useLocation();
+  let from = location?.state?.from?.pathname || '/';
+
   return isAuth && restricted ? (
-    <Navigate to="/" replace={true}  />
+    <Navigate to={from} replace={true} />
   ) : (
     <Outlet />
   );

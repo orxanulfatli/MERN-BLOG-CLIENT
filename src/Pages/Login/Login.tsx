@@ -7,11 +7,6 @@ import { useAppSelector } from "../../hooks/redux";
 
 const Login: React.FC = () => {
   const [sms, setSms] = React.useState(false);
-  const {isAuth} = useAppSelector(state=>state.authReducer)
-  const navigate = useNavigate()
-  const location = useLocation()
-  let from = location?.state?.from?.pathname || '/'
-  
 
   return (
     <div className="login">
