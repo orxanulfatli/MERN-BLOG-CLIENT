@@ -7,7 +7,7 @@ export interface IComment {
     blog_user_id: string
     content: string
     replyCM?: IComment[]
-    reply_user?: string
+    reply_user?: IUser|null
     comment_root?: string
     createdAt: string
 }

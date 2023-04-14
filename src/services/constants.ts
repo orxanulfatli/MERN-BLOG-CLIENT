@@ -18,3 +18,4 @@ export const CATEGORY_URL = '/category';
 export const CREATE_BLOG_URL = '/blog'
 export const HOME_BLOGS_URL = '/home/blogs';
 export const CREATE_COMMENT_URL = '/comment'
+export const REPLY_COMMENT_URL = '/reply_comment'

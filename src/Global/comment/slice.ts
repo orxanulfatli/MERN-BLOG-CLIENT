@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { IComment } from "../../models/Comments"
-import { createCommentAC, getCommentsAC } from "./action"
+import { createCommentAC, getCommentsAC, replyCommentAC } from "./action"
 
 export interface ICommentState {
     isLoading?:boolean
@@ -19,10 +19,6 @@ const commentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         //create comment
-        builder.addCase(createCommentAC.pending, (state, action) => {
-            // state.isLoading = true
-            
-        })
         builder.addCase(createCommentAC.fulfilled, (state, action) => {
             const{payload} = action
             state.isLoading = false
@@ -40,6 +36,23 @@ const commentSlice = createSlice({
             state.total = payload.total
             state.isLoading = false
 
+        })
+
+
+        builder.addCase(replyCommentAC.fulfilled, (state, action) => {
+            const { payload } = action
+            state.isLoading = false
+            state.comments = state.comments.map(item => (
+                item._id === payload.comment_root
+                    ? {
+                        ...item,
+                        replyCM: [
+                            payload,
+                            ...item.replyCM as [],
+                        ]
+                    }
+                    : item
+            ))
         })
         
     },

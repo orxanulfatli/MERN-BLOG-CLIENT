@@ -9,21 +9,22 @@ import Comment from "./Comment/Comment";
 import { createCommentAC, getCommentsAC } from "../../../Global/comment/action";
 import { getComments } from "../../../services/commentsService";
 import EasyLoading from "../../../components/EasyLoading";
+import Pagination from "../../../components/Pagination";
 
 interface IProps {
   blog: IBlog;
 }
 
 const DisplayBlog: React.FC<IProps> = ({ blog }) => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
-  const { isLoading, comments } = useAppSelector(
+  const { isLoading, comments,total } = useAppSelector(
     (state) => state.commentReducer
   );
   const { isAuth, user, accessToken } = useAppSelector(
     (state) => state.authReducer
   );
 
-  const location = useLocation();
   const [showComments, setShowComments] = useState<IComment[]>([]);
 
   const handleComment = (body: string) => {
@@ -47,9 +48,15 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
 
   useEffect(() => {
     if (!blog._id) return;
-    dispatch(getCommentsAC(blog._id))
+    const num = location.search.slice(6) || 1;
+    dispatch(getCommentsAC({id:blog._id,num}))
   },[blog._id])
 
+
+    const handlePagination = (num: number) => {
+      if (!blog._id) return;
+    dispatch(getCommentsAC({id:blog._id,num}));
+    };
   return (
     <div>
       <h2
@@ -90,9 +97,17 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
         </h5>
       )}
 
-      {isLoading?<EasyLoading/>:showComments?.map((comment, index) => (
-        <Comment key={index} comment={comment} />
-      ))}
+      {isLoading ? (
+        <EasyLoading />
+      ) : (
+        showComments?.map((comment, index) => (
+          <Comment key={index} comment={comment} />
+        ))
+      )}
+
+      {total > 1 && (
+        <Pagination total={total} callback={handlePagination} />
+      )}
     </div>
   );
 };
