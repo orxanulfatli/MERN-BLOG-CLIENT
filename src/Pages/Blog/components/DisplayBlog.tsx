@@ -6,7 +6,9 @@ import { Link, useLocation } from "react-router-dom";
 import { IComment } from "../../../models/Comments";
 import { IUser } from "../../../models/User";
 import Comment from "./Comment/Comment";
-import { createCommentAC } from "../../../Global/comment/action";
+import { createCommentAC, getCommentsAC } from "../../../Global/comment/action";
+import { getComments } from "../../../services/commentsService";
+import EasyLoading from "../../../components/EasyLoading";
 
 interface IProps {
   blog: IBlog;
@@ -42,6 +44,11 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
     if (comments.length === 0) return;
     setShowComments(comments);
   }, [comments]);
+
+  useEffect(() => {
+    if (!blog._id) return;
+    dispatch(getCommentsAC(blog._id))
+  },[blog._id])
 
   return (
     <div>
@@ -83,7 +90,7 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
         </h5>
       )}
 
-      {showComments?.map((comment, index) => (
+      {isLoading?<EasyLoading/>:showComments?.map((comment, index) => (
         <Comment key={index} comment={comment} />
       ))}
     </div>

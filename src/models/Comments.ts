@@ -8,5 +8,11 @@ export interface IComment {
     content: string
     replyCM?: IComment[]
     reply_user?: string
+    comment_root?: string
     createdAt: string
+}
+
+export interface ICommments {
+    comments: IComment[]
+    total:number
 }
