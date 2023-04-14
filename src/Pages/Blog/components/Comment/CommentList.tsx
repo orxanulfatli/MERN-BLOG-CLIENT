@@ -1,8 +1,13 @@
-import React,{useState} from 'react'
-import { IComment } from '../../../../models/Comments';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import Input from './Input';
-import { replyCommentAC } from '../../../../Global/comment/action';
+import React, { useState } from "react";
+import { IComment } from "../../../../models/Comments";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import Input from "./Input";
+import {
+  replyCommentAC,
+  updateCommentAC,
+  updateReplyAC,
+} from "../../../../Global/comment/action";
+import CommentNav from "./CommentNav";
 interface IProps {
   children?: React.ReactNode;
 
@@ -18,8 +23,11 @@ const CommentList: React.FC<IProps> = ({
   children,
 }) => {
   const [onReply, setOnReply] = useState(false);
-  const dispatch = useAppDispatch()
-  const { isAuth, user } = useAppSelector((state) => state.authReducer);
+  const dispatch = useAppDispatch();
+  const { isAuth, user, accessToken } = useAppSelector(
+    (state) => state.authReducer
+  );
+  const [edit, setEdit] = useState<IComment>();
 
   const handleReply = (body: string) => {
     if (!isAuth || !user) return;
@@ -32,34 +40,65 @@ const CommentList: React.FC<IProps> = ({
       comment_root: comment.comment_root || comment._id,
       createdAt: new Date().toISOString(),
     };
-        console.log(data);
-    setShowReply([data,...showReply ]);
-        dispatch(replyCommentAC(data));
+    setShowReply([data, ...showReply]);
+    dispatch(replyCommentAC(data));
 
-        setOnReply(false);
+    setOnReply(false);
   };
 
+  const handleUpdate = (body: string) => {
+    if (!user || !accessToken || !edit) return;
+
+    if (body === edit.content) return setEdit(undefined);
+
+    const newComment = { ...edit, content: body };
+    newComment.comment_root
+      ? dispatch(updateReplyAC(newComment))
+      : dispatch(updateCommentAC(newComment));
+    
+    setEdit(undefined);
+  };
   return (
     <div className="w-100">
-      <div className="comment_box">
-        <div
-          className="p-2"
-          dangerouslySetInnerHTML={{
-            __html: comment.content,
-          }}
-        />
+      {edit ? (
+        <Input callback={handleUpdate} edit={edit} setEdit={setEdit} />
+      ) : (
+        <div className="comment_box">
+          <div
+            className="p-2"
+            dangerouslySetInnerHTML={{
+              __html: comment.content,
+            }}
+          />
 
-        <div className="d-flex justify-content-between p-2">
-          <small
-            style={{ cursor: "pointer" }}
-            onClick={() => setOnReply(!onReply)}
-          >
-            {onReply ? "- Cancel -" : "- Reply -"}
-          </small>
+          <div className="d-flex justify-content-between p-2">
+            <small
+              style={{ cursor: "pointer" }}
+              onClick={() => setOnReply(!onReply)}
+            >
+              {onReply ? "- Cancel -" : "- Reply -"}
+            </small>
 
-          <small>{new Date(comment.createdAt).toLocaleString()}</small>
+            <small className="d-flex">
+              <div style={{ cursor: "pointer" }}>
+                {comment.blog_user_id === user?._id ? (
+                  comment.user?._id === user._id ? (
+                    <CommentNav comment={comment} setEdit={setEdit} />
+                  ) : (
+                    <i className="fas fa-trash-alt mx-2" />
+                  )
+                ) : (
+                  comment?.user?._id === user?._id && (
+                    <CommentNav comment={comment} setEdit={setEdit} />
+                  )
+                )}
+              </div>
+
+              <div>{new Date(comment.createdAt).toLocaleString()}</div>
+            </small>
+          </div>
         </div>
-      </div>
+      )}
 
       {onReply && <Input callback={handleReply} />}
 
@@ -68,4 +107,4 @@ const CommentList: React.FC<IProps> = ({
   );
 };
 
-export default CommentList
+export default CommentList;

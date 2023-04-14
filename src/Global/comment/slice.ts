@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { IComment } from "../../models/Comments"
-import { createCommentAC, getCommentsAC, replyCommentAC } from "./action"
+import { createCommentAC, getCommentsAC, replyCommentAC, updateCommentAC, updateReplyAC } from "./action"
 
 export interface ICommentState {
     isLoading?:boolean
@@ -16,7 +16,14 @@ const initialState: ICommentState = {
 const commentSlice = createSlice({
     name: 'comments',
     initialState,
-    reducers: {},
+    reducers: {
+        updateComment: (state,action) => {
+            
+        },
+         updateReply: (state, action) => {
+        
+        }
+    },
     extraReducers: (builder) => {
         //create comment
         builder.addCase(createCommentAC.fulfilled, (state, action) => {
@@ -38,7 +45,7 @@ const commentSlice = createSlice({
 
         })
 
-
+        //reply comments
         builder.addCase(replyCommentAC.fulfilled, (state, action) => {
             const { payload } = action
             state.isLoading = false
@@ -50,6 +57,33 @@ const commentSlice = createSlice({
                             payload,
                             ...item.replyCM as [],
                         ]
+                    }
+                    : item
+            ))
+        })
+
+        //update comments 
+        builder.addCase(updateCommentAC.fulfilled, (state, action) => {
+            const { payload } = action;
+            state.comments = state.comments.map(item => (
+                item._id === payload._id
+                    ? payload
+                    : item
+            ))
+        })
+
+        //update replied comments
+        builder.addCase(updateReplyAC.fulfilled, (state, action) => {
+            const { payload } = action
+            state.comments = state.comments.map(item => (
+                item._id === payload.comment_root
+                    ? {
+                        ...item,
+                        replyCM: item.replyCM?.map(rp => (
+                            rp._id === payload._id
+                                ? payload
+                                : rp
+                        ))
                     }
                     : item
             ))

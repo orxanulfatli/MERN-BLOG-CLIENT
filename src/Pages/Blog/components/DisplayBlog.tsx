@@ -26,6 +26,7 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
   );
 
   const [showComments, setShowComments] = useState<IComment[]>([]);
+  
 
   const handleComment = (body: string) => {
     if (!isAuth || !accessToken) return;
