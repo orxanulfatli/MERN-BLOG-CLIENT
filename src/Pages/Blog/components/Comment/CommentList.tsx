@@ -3,6 +3,8 @@ import { IComment } from "../../../../models/Comments";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import Input from "./Input";
 import {
+  deleteCommentAC,
+  deleteReplyAC,
   replyCommentAC,
   updateCommentAC,
   updateReplyAC,
@@ -58,6 +60,12 @@ const CommentList: React.FC<IProps> = ({
     
     setEdit(undefined);
   };
+
+    const handleDelete = (comment: IComment) => {
+      if (!user || !accessToken) return;
+      console.log('hello')
+      comment.comment_root?dispatch(deleteReplyAC(comment)):dispatch(deleteCommentAC(comment));
+    };
   return (
     <div className="w-100">
       {edit ? (
@@ -80,16 +88,29 @@ const CommentList: React.FC<IProps> = ({
             </small>
 
             <small className="d-flex">
-              <div style={{ cursor: "pointer" }}>
+              <div className="comment_nav">
                 {comment.blog_user_id === user?._id ? (
                   comment.user?._id === user._id ? (
-                    <CommentNav comment={comment} setEdit={setEdit} />
+                    <CommentNav
+                      comment={comment}
+                      setEdit={setEdit}
+                      handleDelete={handleDelete}
+                    />
                   ) : (
-                    <i className="fas fa-trash-alt mx-2" />
+                    <i
+                      className="fas fa-trash-alt mx-2"
+                      onClick={() => {
+                        handleDelete(comment);
+                      }}
+                    />
                   )
                 ) : (
                   comment?.user?._id === user?._id && (
-                    <CommentNav comment={comment} setEdit={setEdit} />
+                    <CommentNav
+                      comment={comment}
+                      setEdit={setEdit}
+                      handleDelete={handleDelete}
+                    />
                   )
                 )}
               </div>

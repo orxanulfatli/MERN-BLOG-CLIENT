@@ -3,7 +3,7 @@ import { IComment } from "../../models/Comments";
 import { AxiosError } from "axios";
 import { IApiError } from "../../models/Error";
 import { alertAC } from "../alert/alertSlice";
-import { createComment, getComments, replyComment } from "../../services/commentsService";
+import { createComment, deleteComment, getComments, replyComment, updateComment } from "../../services/commentsService";
 import { ICommentState } from "./slice";
 
 export const createCommentAC = createAsyncThunk<IComment, IComment, { rejectValue: IApiError }>('create_comment', async (comment,{dispatch,rejectWithValue}) => {
@@ -63,7 +63,8 @@ export const replyCommentAC = createAsyncThunk<IComment, IComment, { rejectValue
 
 export const updateCommentAC = createAsyncThunk<IComment, IComment, { rejectValue: IApiError }>('update_comment', async (comment, { dispatch, rejectWithValue }) => {
     try {
-        // const { data } = await replyComment(comment);
+        const { data } = await updateComment(comment._id as string,comment);
+        dispatch(alertAC.success(data.message))
         return comment
     } catch (error: any) {
         let err: AxiosError<IApiError> = error;
@@ -78,7 +79,41 @@ export const updateCommentAC = createAsyncThunk<IComment, IComment, { rejectValu
 })
 export const updateReplyAC = createAsyncThunk<IComment, IComment, { rejectValue: IApiError }>('update_replied_comment', async (comment, { dispatch, rejectWithValue }) => {
     try {
-        // const { data } = await replyComment(comment);
+        const { data } = await updateComment(comment._id as string, comment);
+        dispatch(alertAC.success(data.message))
+        return comment
+    } catch (error: any) {
+        let err: AxiosError<IApiError> = error;
+        if (err.response) {
+            dispatch(alertAC.error(err.response.data));
+        } else {
+            dispatch(alertAC.error(error));
+        }
+        if (!err.response) throw error;
+        return rejectWithValue(err.response.data);
+    }
+})
+export const deleteCommentAC = createAsyncThunk<IComment, IComment, { rejectValue: IApiError }>('delete_comment', async (comment, { dispatch, rejectWithValue }) => {
+    try {
+        const { data } = await deleteComment(comment._id as string);
+        dispatch(alertAC.success(data.message))
+        return comment
+    } catch (error: any) {
+        let err: AxiosError<IApiError> = error;
+        if (err.response) {
+            dispatch(alertAC.error(err.response.data));
+        } else {
+            dispatch(alertAC.error(error));
+        }
+        if (!err.response) throw error;
+        return rejectWithValue(err.response.data);
+    }
+})
+
+export const deleteReplyAC = createAsyncThunk<IComment, IComment, { rejectValue: IApiError }>('delete_replied_comment', async (comment, { dispatch, rejectWithValue }) => {
+    try {
+        const { data } = await deleteComment(comment._id as string);
+        dispatch(alertAC.success(data.message))
         return comment
     } catch (error: any) {
         let err: AxiosError<IApiError> = error;

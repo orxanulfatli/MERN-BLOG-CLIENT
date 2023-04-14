@@ -14,3 +14,10 @@ export const getComments = async (blog_id:string,num:any,limit:number) => {
 export const replyComment = async (data:IComment) => {
       return $api.post(REPLY_COMMENT_URL,data)
 }
+
+export const updateComment = async (id:string,data:IComment) => {
+      return $api.patch<{message:string}>(`/comment/${id}`,data)
+}
+export const deleteComment = async (id: string) => {
+      return $api.delete<{message:string}>(`/comment/${id}`)
+}

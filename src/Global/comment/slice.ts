@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { IComment } from "../../models/Comments"
-import { createCommentAC, getCommentsAC, replyCommentAC, updateCommentAC, updateReplyAC } from "./action"
+import { createCommentAC, deleteCommentAC, deleteReplyAC, getCommentsAC, replyCommentAC, updateCommentAC, updateReplyAC } from "./action"
 
 export interface ICommentState {
     isLoading?:boolean
@@ -83,6 +83,29 @@ const commentSlice = createSlice({
                             rp._id === payload._id
                                 ? payload
                                 : rp
+                        ))
+                    }
+                    : item
+            ))
+        })
+
+        //delete comments 
+        builder.addCase(deleteCommentAC.fulfilled, (state, action) => {
+            const {payload} = action
+            state.comments = state.comments.filter(item =>
+                item._id !== payload._id
+            )
+        })
+
+        //delete replied comments
+        builder.addCase(deleteReplyAC.fulfilled, (state, action) => {
+            const { payload } = action;
+            state.comments = state.comments.map(item => (
+                item._id === payload.comment_root
+                    ? {
+                        ...item,
+                        replyCM: item.replyCM?.filter(rp => (
+                            rp._id !== payload._id
                         ))
                     }
                     : item
