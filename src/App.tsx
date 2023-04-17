@@ -23,13 +23,12 @@ import Blog from "./Pages/Blog/Blog";
 import io from 'socket.io-client';
 import { socketAC } from "./Global/socket/socket";
 import SocketClient from "./SocketClient";
+import { apiUrl } from "./services/constants";
 
 function App() {
   const dispatch = useAppDispatch();
   const { newBlog } = useAppSelector(state => state.blogReducer)
-  let apiUrl:string|undefined = process.env.production
-    ? process.env.REACT_APP_PROD_URL
-    : process.env.REACT_APP_DEV_URL;
+
   useEffect(() => {
     dispatch(getCategoriesAC());
   console.log(apiUrl,'url')

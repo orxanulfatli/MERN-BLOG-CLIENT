@@ -4,7 +4,7 @@
 // const { REACT_APP_DEV_URL, REACT_APP_PROD_URL } = process.env
 
 // export const API_URL =  process.env.REACT_APP_DEV_URL 
-export let apiUrl: string | undefined = process.env.production
+export let apiUrl: string | undefined = process.env.NODE_ENV==='production'
     ? process.env.REACT_APP_PROD_URL
     : process.env.REACT_APP_DEV_URL;
 
