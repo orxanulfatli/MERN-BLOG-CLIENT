@@ -1,13 +1,14 @@
 import axios from "axios";
 import { checkAuthAC } from "../Global/auth/action";
 import {AppStore} from '../Global/store'
+import { apiUrl } from "./constants";
 export const $mainAPi = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: apiUrl,
     withCredentials: true
 }
 )
 export const $api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: apiUrl,
     withCredentials: true
 })
 

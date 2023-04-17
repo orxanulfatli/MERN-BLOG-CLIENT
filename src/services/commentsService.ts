@@ -8,7 +8,7 @@ export const createComment = async (comment:IComment) => {
 }
 
 export const getComments = async (blog_id:string,num:any,limit:number) => {
-      return $mainAPi.get<ICommentState>(`/comments/blog/${blog_id}?page=${num}&limit=${limit}`)
+      return $mainAPi.get<ICommentState>(`/api/comments/blog/${blog_id}?page=${num}&limit=${limit}`)
 }
 
 export const replyComment = async (data:IComment) => {
@@ -16,8 +16,8 @@ export const replyComment = async (data:IComment) => {
 }
 
 export const updateComment = async (id:string,data:IComment) => {
-      return $api.patch<{message:string}>(`/comment/${id}`,{data})
+      return $api.patch<{ message: string }>(`/api/comment/${id}`,{data})
 }
 export const deleteComment = async (id: string) => {
-      return $api.delete<{message:string}>(`/comment/${id}`)
+      return $api.delete<{ message: string }>(`/api/comment/${id}`)
 }

@@ -12,13 +12,13 @@ export const getHomeBlogs = async () => {
 }
 
 export const getBlogsByCategory = async (id:string,value:string,limit:number) => {
-    return $mainAPi.get(`/blogs/category/${id}${value}&limit=${limit}`)
+    return $mainAPi.get(`/api/blogs/category/${id}${value}&limit=${limit}`)
 }
 
 export const getBlogsByUser = async (id: string,value:string,limit:number) => {
-    return $mainAPi.get(`blogs/user/${id}${value}&limit=${limit}`)
+    return $mainAPi.get(`/api/blogs/user/${id}${value}&limit=${limit}`)
 }
 
 export const getBlogDetail = async (id: string) => {
-   return $mainAPi.get<IBlog>(`blog/${id}`)
+    return $mainAPi.get<IBlog>(`/api/blog/${id}`)
 }

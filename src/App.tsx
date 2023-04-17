@@ -26,17 +26,20 @@ import SocketClient from "./SocketClient";
 
 function App() {
   const dispatch = useAppDispatch();
-  const {newBlog} = useAppSelector(state=>state.blogReducer)
+  const { newBlog } = useAppSelector(state => state.blogReducer)
+  let apiUrl:string|undefined = process.env.production
+    ? process.env.REACT_APP_PROD_URL
+    : process.env.REACT_APP_DEV_URL;
   useEffect(() => {
     dispatch(getCategoriesAC());
-
+  console.log(apiUrl,'url')
   }, []);
 
   useEffect(() => {
-      const socket = io("http://localhost:5000");
+      const socket = io(apiUrl as string);
       dispatch(socketAC.socket(socket))
     return () => { socket.close() }
-  }, [dispatch]);
+  }, [dispatch,apiUrl]);
  
 
   return (

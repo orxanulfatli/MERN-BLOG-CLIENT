@@ -63,6 +63,6 @@ export const resetPassword = async (data: { password: string }) => {
 }
 
 export const getOtherInfo = async (id: string) => {
-  return $mainAPi.get<IUser>(`/user/${id}`)
+  return $mainAPi.get<IUser>(`/api/user/${id}`)
   
 }

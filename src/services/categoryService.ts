@@ -11,10 +11,10 @@ export const getCategories = () => {
 }
 
 export const updateCategory = async (data:ICategory) => {
-    return $api.patch<{ message: string }>(`category/${data._id}`,{name:data.name})
+    return $api.patch<{ message: string }>(`/api/category/${data._id}`,{name:data.name})
 }
 
 export const deleteCategory = async (id:string) => {
-    return $api.delete<{message:string}>(`category/${id}`)
+    return $api.delete<{ message: string }>(`/api/category/${id}`)
     
 }
