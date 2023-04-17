@@ -5,6 +5,7 @@ import { categoryReducer } from './category/slice';
 import { blogReducer } from './blog/slice';
 import { profileReducer } from './profile/slice';
 import { commentReducer } from './comment/slice';
+import { socketReducer } from './socket/socket';
 
 const rootReducer = combineReducers({
     authReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     categoryReducer,
     blogReducer,
     profileReducer,
-    commentReducer
+    commentReducer,
+    socketReducer
 })
 
 export const setupStore = () => {

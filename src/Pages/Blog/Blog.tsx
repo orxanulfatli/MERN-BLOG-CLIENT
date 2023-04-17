@@ -9,6 +9,9 @@ import { showErrMsg } from '../../components/alert/Alert';
 import DisplayBlog from './components/DisplayBlog';
 
 const Blog = () => {
+
+  const dispatch = useAppDispatch();
+  const {socket} = useAppSelector(state=>state.socketReducer)
   const {id} = useParams<IParams>();
 
   const [blog, setBlog] = useState<IBlog>();
@@ -31,8 +34,18 @@ const Blog = () => {
           });
 
     return () => setBlog(undefined);
-  }, [id,]);
+  }, [id]);
+  
+  //join room
+  useEffect(() => {
+        if (!id || !socket) return;
+    socket.emit('joinRoom', id);
 
+    return () => {
+      socket.emit('outRoom',id)
+    }
+  },[socket,id])
+  
   if (loading) return <Loading />;
   return (
     <div className="my-4">

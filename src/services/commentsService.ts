@@ -16,7 +16,7 @@ export const replyComment = async (data:IComment) => {
 }
 
 export const updateComment = async (id:string,data:IComment) => {
-      return $api.patch<{message:string}>(`/comment/${id}`,data)
+      return $api.patch<{message:string}>(`/comment/${id}`,{data})
 }
 export const deleteComment = async (id: string) => {
       return $api.delete<{message:string}>(`/comment/${id}`)

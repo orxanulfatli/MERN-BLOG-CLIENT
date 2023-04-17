@@ -36,6 +36,7 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
       user: user,
       blog_id: blog._id as string,
       blog_user_id: (blog.user as IUser)._id,
+      replyCM:[],
       createdAt: new Date().toISOString(),
     };
     setShowComments([data, ...showComments]);

@@ -19,6 +19,11 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import Blog from "./Pages/Blog/Blog";
 
+//socket 
+import io from 'socket.io-client';
+import { socketAC } from "./Global/socket/socket";
+import SocketClient from "./SocketClient";
+
 function App() {
   const dispatch = useAppDispatch();
   const {newBlog} = useAppSelector(state=>state.blogReducer)
@@ -26,12 +31,18 @@ function App() {
     dispatch(getCategoriesAC());
 
   }, []);
+
+  useEffect(() => {
+      const socket = io("http://localhost:5000");
+      dispatch(socketAC.socket(socket))
+    return () => { socket.close() }
+  }, [dispatch]);
  
 
   return (
     <div className="container">
       <Alert />
-
+  <SocketClient/>
       <Routes>
         <Route element={<PersistLogin />}>
           <Route path="/" element={<MainLayout />}>
