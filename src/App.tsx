@@ -27,7 +27,6 @@ import { apiUrl } from "./services/constants";
 
 function App() {
   const dispatch = useAppDispatch();
-  const { newBlog } = useAppSelector(state => state.blogReducer)
 
   useEffect(() => {
     dispatch(getCategoriesAC());
