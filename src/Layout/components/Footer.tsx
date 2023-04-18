@@ -2,7 +2,7 @@
 const Footer = () => {
   return (
     <div className="text-center bg-light py-3">
-      <h6>Welcome my to Blog</h6>
+      <h6>Welcome to my Blog</h6>
       {/* <a
         href="https://www.youtube.com/c/DevATHTML"
         target="_blank"
