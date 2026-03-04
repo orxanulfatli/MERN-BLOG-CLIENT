@@ -1,8 +1,9 @@
-
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="text-center bg-light py-3">
-      <h6>Welcome to my Blog</h6>
+      <h6>Welcome to Blog Platform</h6>
       {/* <a
         href="https://www.youtube.com/c/DevATHTML"
         target="_blank"
@@ -11,9 +12,9 @@ const Footer = () => {
       >
         https://www.youtube.com
       </a> */}
-      <p> Copyright &copy; 2023</p>
+      <p>&copy; {currentYear} Blog Platform. Crafted for writers.</p>
     </div>
   );
-}
+};
 
-export default Footer
+export default Footer;

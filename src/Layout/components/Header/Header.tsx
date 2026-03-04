@@ -10,7 +10,7 @@ const Header = () => {
       className="navbar navbar-expand-lg navbar-light bg-light p-3"
     >
       <Link to="/" className="navbar-brand">
-        BlogDev
+        Blog Platform
       </Link>
 
       <button
