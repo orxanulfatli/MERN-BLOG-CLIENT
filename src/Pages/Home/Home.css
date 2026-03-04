@@ -32,3 +32,50 @@
   text-decoration: none;
   text-transform: capitalize;
 }
+
+.skeleton-card {
+  border: 1px solid #ececec;
+}
+
+.skeleton-thumb {
+  height: 180px;
+  border-radius: 4px 4px 0 0;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.skeleton-line-lg {
+  height: 18px;
+}
+
+.skeleton-line-sm {
+  width: 55%;
+}
+
+.skeleton-thumb,
+.skeleton-line {
+  background: linear-gradient(90deg, #ececec 25%, #f6f6f6 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: homeShimmer 1.2s ease-in-out infinite;
+}
+
+.home_empty,
+.home_error {
+  padding: 1rem;
+  border: 1px solid #ececec;
+  border-radius: 0.5rem;
+  background: #fafafa;
+}
+
+@keyframes homeShimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

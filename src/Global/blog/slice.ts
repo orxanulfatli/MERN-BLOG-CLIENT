@@ -4,6 +4,8 @@ import { createBlogAC, getBlogsByCategoryAC, getBlogsByUserAC, getHomeBlogsAC } 
 
 interface IBlogState {
     homeBlogs: IHomeBlogs[]
+    homeLoading: boolean
+    homeError: string | null
     newBlog: IBlog | null
     categoryBlogs: IBlogsCategory[]
     isLoading: boolean
@@ -11,6 +13,8 @@ interface IBlogState {
 }
 const initialState: IBlogState = {
     homeBlogs: [],
+    homeLoading: false,
+    homeError: null,
     newBlog: null,
     categoryBlogs: [],
     isLoading: false,
@@ -23,9 +27,20 @@ const blogSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         //get home blogs
+        builder.addCase(getHomeBlogsAC.pending, (state) => {
+            state.homeLoading = true
+            state.homeError = null
+        })
+
         builder.addCase(getHomeBlogsAC.fulfilled, (state, action) => {
             const { payload } = action
+            state.homeLoading = false
             state.homeBlogs = payload
+        })
+
+        builder.addCase(getHomeBlogsAC.rejected, (state, action) => {
+            state.homeLoading = false
+            state.homeError = action.payload?.message || action.error.message || "Failed to load blogs."
         })
 
         // create new blog

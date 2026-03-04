@@ -4,13 +4,68 @@ import "./Home.css";
 import CardVert from "../../components/cards/CardVert";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getHomeBlogsAC } from "../../Global/blog/action";
+import HomeSkeleton from "./components/HomeSkeleton";
+
+const getResponsiveFallbackCount = () => {
+  if (typeof window === "undefined") return 8;
+  if (window.innerWidth < 576) return 4;
+  if (window.innerWidth < 992) return 6;
+  return 8;
+};
 
 const Home = () => {
-  const { homeBlogs, newBlog } = useAppSelector((state) => state.blogReducer);
+  const { homeBlogs, newBlog, homeLoading, homeError } = useAppSelector(
+    (state) => state.blogReducer
+  );
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getHomeBlogsAC());
-  }, [newBlog]);
+  }, [dispatch, newBlog]);
+
+  const totalLoadedBlogs = homeBlogs.reduce(
+    (sum, group) => sum + group.blogs.length,
+    0
+  );
+
+  const skeletonCount =
+    totalLoadedBlogs > 0
+      ? Math.max(Math.min(totalLoadedBlogs, 12), 4)
+      : getResponsiveFallbackCount();
+
+  if (homeLoading) {
+    return (
+      <div className="home_page">
+        <HomeSkeleton count={skeletonCount} />
+      </div>
+    );
+  }
+
+  if (homeError) {
+    return (
+      <div className="home_page">
+        <div className="home_error">
+          <p className="mb-2">{homeError}</p>
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm"
+            onClick={() => dispatch(getHomeBlogsAC())}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!homeBlogs.length) {
+    return (
+      <div className="home_page">
+        <div className="home_empty">No blogs found.</div>
+      </div>
+    );
+  }
+
   return (
     <div className="home_page">
       {homeBlogs.map((homeBlog) => (

@@ -37,10 +37,7 @@ export const createBlogAC = createAsyncThunk<IBlog, IBlog, { rejectValue: IApiEr
 export const getHomeBlogsAC = createAsyncThunk<IHomeBlogs[], undefined, { rejectValue: IApiError }
 >('home_blog', async (_, { dispatch, rejectWithValue }) => {
     try {
-        dispatch(alertAC.startLoading());
-    
         const { data } = await getHomeBlogs();
-        dispatch(alertAC.stopLoading());
         return data
     } catch (error: any) {
         let err: AxiosError<IApiError> = error;
