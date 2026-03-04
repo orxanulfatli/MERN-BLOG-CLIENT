@@ -9,12 +9,14 @@ const CardVert: React.FC<IProps> = ({ blog }) => {
   return (
     <div className="card">
       {typeof blog.thumbnail === "string" && (
-        <img
-          src={blog.thumbnail}
-          className="card-img-top"
-          alt="..."
-          style={{ height: "180px", objectFit: "cover" }}
-        />
+        <Link to={`/blog/${blog._id}`}>
+          <img
+            src={blog.thumbnail}
+            className="card-img-top"
+            alt={blog.title}
+            style={{ height: "180px", objectFit: "cover" }}
+          />
+        </Link>
       )}
 
       <div className="card-body">
