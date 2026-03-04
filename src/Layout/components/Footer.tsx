@@ -1,19 +1,15 @@
+import "./Footer.css";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="text-center bg-light py-3">
-      <h6>Welcome to Blog Platform</h6>
-      {/* <a
-        href="https://www.youtube.com/c/DevATHTML"
-        target="_blank"
-        rel="noreferrer"
-        className="mb-2 d-block"
-      >
-        https://www.youtube.com
-      </a> */}
-      <p>&copy; {currentYear} Blog Platform. Crafted for writers.</p>
-    </div>
+    <footer className="footer-area text-center py-3 mt-4">
+      <h6 className="footer-title mb-1">Welcome to Blog Platform</h6>
+      <p className="footer-copy mb-0">
+        &copy; {currentYear} Blog Platform. Crafted for writers.
+      </p>
+    </footer>
   );
 };
 
